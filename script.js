@@ -1,4 +1,4 @@
-<script>
+
             const baseUrls = {
                "عبدالرحمن العوسي": "https://server6.mp3quran.net/aloosi/",
                 "عبدالرحمن السديس": "https://server6.mp3quran.net/akdr/",
@@ -238,6 +238,3 @@
                     button.style.display = text.includes(searchInput) ? 'block' : 'none';
                 });
             }
-        </script>
-    </body>
-    </html>
