@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اقرأ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rakkas&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.0.3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Favicon and Apple Touch Icon -->
+    <link rel="icon" href="https://i.pinimg.com/736x/21/6e/79/216e79c2f896c7049778c211b2a40ed2.jpg" type="image/jpg">
+    <link rel="apple-touch-icon" href="https://i.pinimg.com/736x/21/6e/79/216e79c2f896c7049778c211b2a40ed2.jpg">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Rakkas', sans-serif;
+            background-image: url('https://i.pinimg.com/736x/04/7e/4c/047e4c86a95e5f6f3caa57dc19bf2237.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            text-align: center;
+            color: #f7f7f3;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 7.5em; /* Agrandir le titre */
+            font-weight: bold;
+            color: #000000; /* Couleur noire pour le titre */
+            margin-top: 10px;
+            margin-bottom: 0px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6); /* Ombre pour améliorer la lisibilité */
+            display: inline-block;
+            padding: 6px;
+            border-radius: 1px;
+            -webkit-text-stroke: 0.1px rgb(249, 245, 218);
+            background: transparent;
+        }
+
+        .subtitle {
+            font-size: 2em;
+            color: #000000; /* Couleur noire pour le sous-titre */
+            margin-top: 0px;
+            margin-bottom: 10px; /* Reduced distance between subtitle and icons */
+            font-family: 'Rakkas', sans-serif;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 20); /* Ombre pour améliorer la lisibilité */
+            display: inline-block;
+            padding: 6px;
+            -webkit-text-stroke: 0.3px rgb(249, 246, 226);
+            background: transparent;
+        }
+
+        .time-status {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #111;
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Espacement entre les lignes */
+        }
+
+        .battery-status,
+        .time-display,
+        .mode-toggle {
+            display: flex; /* Aligne les textes et icônes sur une même ligne */
+            justify-content: flex-start; /* Texte à gauche et icône à droite */
+            flex-direction: row-reverse;
+            align-items: center; /* Centre verticalement les éléments */
+            gap: 5px; /* Espacement entre le texte et l'icône */
+        }
+
+        .battery-status i,
+        .time-display i,
+        .mode-toggle i {
+            font-size: 15px; /* Taille des icônes */
+        }
+
+        .battery-level {
+            font-size: 16px; /* Taille du texte de la batterie */
+            font-weight: bold;
+            color: #555;
+        }
+
+        .current-time {
+            font-size: 16px; /* Taille du texte de l'heure */
+            font-weight: bold;
+            color: #000;
+        }
+
+        .container {
+            margin: 30px auto; /* Reduced distance between subtitle and icons */
+            padding: 20px;
+            background: rgba(203, 199, 191, 0.674);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            text-align: right;
+        }
+
+        .icon {
+            display: block;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 2.5em;
+            font-family: 'Rakkas', sans-serif;
+            background-color: #333;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            width: 80%;
+            text-align: center;
+            transition: background 0.3s, transform 0.2;
+        }
+
+        .icon:hover {
+            background-color: #565454;
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            display: none;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .dropdown button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            transition: background 0.3s, transform 0.2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-align: right; /* Ensures text alignment to the right */
+        }
+
+        .dropdown button img {
+            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .dropdown button:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+        }
+
+        .sourates-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .sourates-list button {
+            padding: 15px;
+            background-color: #f5f2f2;
+            color: #151212;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .sourates-list button:hover {
+            background-color: #dedcdc;
+            transform: scale(1.05);
+        }
+
+        /* Barre de recherche */
+        .search-bar {
+            margin: 20px auto;
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            font-size: 1.1em;
+            text-align: right;
+            display: block;
+        }
+
+        .search-bar::placeholder {
+            text-align: right;
+            color: #999;
+        }
+
+        /* Barre audio */
+        .audio-player-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+            text-align: center;
+            gap: 10px; /* Add spacing between elements */
+            position: relative;
+        }
+
+        audio {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center; /* Center the controls */
+            align-items: center;
+        }
+
+        .audio-controls div {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .audio-controls i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .footer-content {
+            font-size: 16px;
+        }
+
+        .developer-name {
+            font-weight: bold; /* Met le texte en gras */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6); /* Ombre pour améliorer la lisibilité */
+            color: rgb(244, 233, 169); /* Change la couleur en rouge */
+            font-size: 19px;
+        }
+
+        /* Social Media Icons */
+        .social-icons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative; /* position the icons absolutely */
+            bottom: 20px; /* position them at the bottom of the container */
+            left: 50%;
+            transform: translateX(-50%); /* center them horizontally */
+        }
+
+        .social-icons a {
+            color: #fcfbfb; /* change color to black */
+            font-size: 2em;
+            transition: color 0.3s;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #555;
+            transform: translateY(-5px);
+        }
+
+        .day-night-toggle {
+            cursor: pointer;
+            color: #fafafa;
+            font-size: 15px;
+        }
+
+        .dark-theme {
+            background-color: #252525c9;
+            color: #fefdfd;
+        }
+
+        .dark-theme .container {
+            background: rgba(39, 38, 38, 0.8);
+        }
+
+        .dark-theme .icon {
+            background-color: rgba(24, 23, 23, 0.932);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .dark-theme .icon:hover {
+            background-color: rgba(45, 45, 45, 0.9);
+        }
+
+        .dark-theme .sourates-list button,
+        .dark-theme .dropdown button {
+            background-color: rgba(0, 0, 0, 0.8); /* Background color with opacity */
+            color: #ffffff; /* Text color white */
+        }
+
+        .dark-theme .sourates-list button:hover,
+        .dark-theme .dropdown button:hover {
+            background-color: #666; /* Darker background on hover */
+        }
+
+        .dark-theme .search-bar {
+            background-color: rgba(50, 50, 50, 0.9);
+            color: #fefdfd;
+        }
+
+        .dark-theme .search-bar::placeholder {
+            color: #ccc;
+        }
+
+        .dark-theme .battery-status i,
+        .dark-theme .time-display i,
+        .dark-theme .mode-toggle i {
+            color: rgba(238, 225, 182, 0.8);
+        }
+
+        .dark-theme .battery-level,
+        .dark-theme .current-time {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>اقْرَأ</h1>
+    <header>
+        <p class="subtitle">منْ أنِس بالقُرآن لمْ تضَرٌه وحشَة</p>
+        <div class="time-status">
+            <div class="battery-status">
+                <span class="battery-icon" style="color: #fafafa;"><i class="fas fa-battery-full"></i></span>
+                <span class="battery-level" style="color: #f8f4f4;">0%</span>
+            </div>
+            <div class="time-display">
+                <span class="time-icon" style="color: #f5efef;"><i class="fas fa-clock"></i></span>
+                <span class="current-time" style="color: #f2efef;">00:00</span>
+            </div>
+            <div class="mode-toggle">
+                <span class="day-night-toggle" onclick="toggleDayNightMode()">
+                    <span>الوضع</span>
+                    <i class="fas fa-sun" id="day-night-icon"></i>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Barre de recherche des sourates -->
+        <input class="search-bar" type="text" id="search-sourates" placeholder="بحث عن السورة..." oninput="searchSourates()">
+
+        <!-- Bouton pour afficher les noms des sourates -->
+        <div class="section">
+            <a class="icon" onclick="toggleDropdown('sourates-dropdown')">اسم السورة</a>
+            <div id="sourates-dropdown" class="dropdown">
+                <div class="sourates-list" id="sourates-list">
+                    <!-- Liste des sourates -->
+                    <button onclick="selectSourate(this, '001')">1- الفاتحة</button>
+                    <button onclick="selectSourate(this, '002')">2- البقرة</button>
+                    <button onclick="selectSourate(this, '003')">3- آل عمران</button>
+                    <button onclick="selectSourate(this, '004')">4- النساء</button>
+                    <button onclick="selectSourate(this, 'المائدة')">5- المائدة</button>
+                    <button onclick="selectSourate(this, 'الأنعام')">6- الأنعام</button>
+                    <button onclick="selectSourate(this, 'الأعراف')">7- الأعراف</button>
+                    <button onclick="selectSourate(this, 'الأنفال')">8- الأنفال</button>
+                    <button onclick="selectSourate(this, 'التوبة')">9- التوبة</button>
+                    <button onclick="selectSourate(this, 'يونس')">10- يونس</button>
+                    <!-- Ajouter les autres sourates ici -->
+                    <button onclick="selectSourate(this, 'هود')">11- هود</button>
+                    <button onclick="selectSourate(this, 'يوسف')">12- يوسف</button>
+                    <button onclick="selectSourate(this, 'الرعد')">13- الرعد</button>
+                    <button onclick="selectSourate(this, 'إبراهيم')">14- إبراهيم</button>
+                    <button onclick="selectSourate(this, 'الحجر')">15- الحجر</button>
+                    <button onclick="selectSourate(this, 'النحل')">16- النحل</button>
+                    <button onclick="selectSourate(this, 'الإسراء')">17- الإسراء</button>
+                    <button onclick="selectSourate(this, 'الكهف')">18- الكهف</button>
+                    <button onclick="selectSourate(this, 'مريم')">19- مريم</button>
+                    <button onclick="selectSourate(this, 'طه')">20- طه</button>
+                    <button onclick="selectSourate(this, 'الأنبياء')">21- الأنبياء</button>
+                    <button onclick="selectSourate(this, 'الحج')">22- الحج</button>
+                    <button onclick="selectSourate(this, 'المؤمنون')">23- المؤمنون</button>
+                    <button onclick="selectSourate(this, 'النور')">24- النور</button>
+                    <button onclick="selectSourate(this, 'الفرقان')">25- الفرقان</button>
+                    <button onclick="selectSourate(this, 'الشعراء')">26- الشعراء</button>
+                    <button onclick="selectSourate(this, 'النمل')">27- النمل</button>
+                    <button onclick="selectSourate(this, 'القصص')">28- القصص</button>
+                    <button onclick="selectSourate(this, 'العنكبوت')">29- العنكبوت</button>
+                    <button onclick="selectSourate(this, 'الروم')">30- الروم</button>
+                    <button onclick="selectSourate(this, 'لقمان')">31- لقمان</button>
+                    <button onclick="selectSourate(this, 'السجدة')">32- السجدة</button>
+                    <button onclick="selectSourate(this, 'الأحزاب')">33- الأحزاب</button>
+                    <button onclick="selectSourate(this, 'سبأ')">34- سبأ</button>
+                    <button onclick="selectSourate(this, 'فاطر')">35- فاطر</button>
+                    <button onclick="selectSourate(this, 'يس')">36- يس</button>
+                    <button onclick="selectSourate(this, 'الصافات')">37- الصافات</button>
+                    <button onclick="selectSourate(this, 'ص')">38- ص</button>
+                    <button onclick="selectSourate(this, 'الزمر')">39- الزمر</button>
+                    <button onclick="selectSourate(this, 'غافر')">40- غافر</button>
+                    <button onclick="selectSourate(this, 'فصلت')">41- فصلت</button>
+                    <button onclick="selectSourate(this, 'الشورى')">42- الشورى</button>
+                    <button onclick="selectSourate(this, 'الزخرف')">43- الزخرف</button>
+                    <button onclick="selectSourate(this, 'الدخان')">44- الدخان</button>
+                    <button onclick="selectSourate(this, 'الجاثية')">45- الجاثية</button>
+                    <button onclick="selectSourate(this, 'الأحقاف')">46- الأحقاف</button>
+                    <button onclick="selectSourate(this, 'محمد')">47- محمد</button>
+                    <button onclick="selectSourate(this, 'الفتح')">48- الفتح</button>
+                    <button onclick="selectSourate(this, 'الحجرات')">49- الحجرات</button>
+                    <button onclick="selectSourate(this, 'ق')">50- ق</button>
+                    <button onclick="selectSourate(this, 'الذاريات')">51- الذاريات</button>
+                    <button onclick="selectSourate(this, 'الطور')">52- الطور</button>
+                    <button onclick="selectSourate(this, 'النجم')">53- النجم</button>
+                    <button onclick="selectSourate(this, 'القمر')">54- القمر</button>
+                    <button onclick="selectSourate(this, 'الرحمن')">55- الرحمن</button>
+                    <button onclick="selectSourate(this, 'الواقعة')">56- الواقعة</button>
+                    <button onclick="selectSourate(this, 'الحديد')">57- الحديد</button>
+                    <button onclick="selectSourate(this, 'المجادلة')">58- المجادلة</button>
+                    <button onclick="selectSourate(this, 'الحشر')">59- الحشر</button>
+                    <button onclick="selectSourate(this, 'الممتحنة')">60- الممتحنة</button>
+                    <button onclick="selectSourate(this, 'الصف')">61- الصف</button>
+                    <button onclick="selectSourate(this, 'الجمعة')">62- الجمعة</button>
+                    <button onclick="selectSourate(this, 'المنافقون')">63- المنافقون</button>
+                    <button onclick="selectSourate(this, 'التغابن')">64- التغابن</button>
+                    <button onclick="selectSourate(this, 'الطلاق')">65- الطلاق</button>
+                    <button onclick="selectSourate(this, 'التحريم')">66- التحريم</button>
+                    <button onclick="selectSourate(this, 'الملك')">67- الملك</button>
+                    <button onclick="selectSourate(this, 'القلم')">68- القلم</button>
+                    <button onclick="selectSourate(this, 'الحاقة')">69- الحاقة</button>
+                    <button onclick="selectSourate(this, 'المعارج')">70- المعارج</button>
+                    <button onclick="selectSourate(this, 'نوح')">71- نوح</button>
+                    <button onclick="selectSourate(this, 'الجن')">72- الجن</button>
+                    <button onclick="selectSourate(this, 'المزمل')">73- المزمل</button>
+                    <button onclick="selectSourate(this, 'المدثر')">74- المدثر</button>
+                    <button onclick="selectSourate(this, 'القيامة')">75- القيامة</button>
+                    <button onclick="selectSourate(this, 'الإنسان')">76- الإنسان</button>
+                    <button onclick="selectSourate(this, 'المرسلات')">77- المرسلات</button>
+                    <button onclick="selectSourate(this, 'النبأ')">78- النبأ</button>
+                    <button onclick="selectSourate(this, 'النازعات')">79- النازعات</button>
+                    <button onclick="selectSourate(this, 'عبس')">80- عبس</button>
+                    <button onclick="selectSourate(this, 'التكوير')">81- التكوير</button>
+                    <button onclick="selectSourate(this, 'الانفطار')">82- الانفطار</button>
+                    <button onclick="selectSourate(this, 'المطففين')">83- المطففين</button>
+                    <button onclick="selectSourate(this, 'الانشقاق')">84- الانشقاق</button>
+                    <button onclick="selectSourate(this, 'البروج')">85- البروج</button>
+                    <button onclick="selectSourate(this, 'الطارق')">86- الطارق</button>
+                    <button onclick="selectSourate(this, 'الأعلى')">87- الأعلى</button>
+                    <button onclick="selectSourate(this, 'الغاشية')">88- الغاشية</button>
+                    <button onclick="selectSourate(this, 'الفجر')">89- الفجر</button>
+                    <button onclick="selectSourate(this, 'البلد')">90- البلد</button>
+                    <button onclick="selectSourate(this, 'الشمس')">91- الشمس</button>
+                    <button onclick="selectSourate(this, 'الليل')">92- الليل</button>
+                    <button onclick="selectSourate(this, 'الضحى')">93- الضحى</button>
+                    <button onclick="selectSourate(this, 'الشرح')">94- الشرح</button>
+                    <button onclick="selectSourate(this,'التين')">95- التين</button>
+                    <button onclick="selectSourate(this, 'العلق')">96- العلق</button>
+                    <button onclick="selectSourate(this, 'القدر')">97- القدر</button>
+                    <button onclick="selectSourate(this, 'البينة')">98- البينة</button>
+                    <button onclick="selectSourate(this, 'الزلزلة')">99- الزلزلة</button>
+                    <button onclick="selectSourate(this, 'العاديات')">100- العاديات</button>
+                    <button onclick="selectSourate(this, 'القارعة')">101- القارعة</button>
+                    <button onclick="selectSourate(this, 'التكاثر')">102- التكاثر</button>
+                    <button onclick="selectSourate(this, 'العصر')">103- العصر</button>
+                    <button onclick="selectSourate(this, 'الهمزة')">104- الهمزة</button>
+                    <button onclick="selectSourate(this, 'الفيل')">105- الفيل</button>
+                    <button onclick="selectSourate(this, 'قريش')">106- قريش</button>
+                    <button onclick="selectSourate(this, 'الماعون')">107- الماعون</button>
+                    <button onclick="selectSourate(this, 'الكوثر')">108- الكوثر</button>
+                    <button onclick="selectSourate(this, 'الكافرون')">109- الكافرون</button>
+                    <button onclick="selectSourate(this, 'النصر')">110- النصر</button>
+                    <button onclick="selectSourate(this, 'المسد')">111- المسد</button>
+                    <button onclick="selectSourate(this, 'الإخلاص')">112- الإخلاص</button>
+                    <button onclick="selectSourate(this, 'الفلق')">113- الفلق</button>
+                    <button onclick="selectSourate(this, '114')">114- الناس</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton pour afficher les noms des lecteurs -->
+        <div class="section">
+            <a class="icon" onclick="toggleDropdown('reciters-dropdown')">اسم القارئ</a>
+            <div id="reciters-dropdown" class="dropdown">
+                <!-- Liste des lecteurs avec images -->
+                <button onclick="selectReciter(this, 'عبدالرحمن العوسي')">
+                    <img src="https://source.boomplaymusic.com/group10/M00/08/07/87f900f3a7754247b7bd57f8cfa11fca_464_464.jpg" alt="عبدالرحمن العوسي">
+                    عبدالرحمن العوسي
+                </button>
+                <button onclick="selectReciter(this, 'عبدالرحمن السديس')">
+                    <img src="https://saudipedia.com/saudipedia/uploads/images/2024/02/04/89199.jpg" alt="عبدالرحمن السديس">
+                    عبدالرحمن السديس 
+                </button>
+                <button onclick="selectReciter(this, 'مشاري راشد العفاسي')">
+                    <img src="https://misharialafasy.net/wp-content/uploads/2014/09/Untitled-3-01.jpg" alt="مشاري راشد العفاسي">
+                    مشاري راشد العفاسي
+                </button>
+                <button onclick="selectReciter(this, 'سعد الغامدي')">
+                    <img src="https://i1.sndcdn.com/artworks-000205520624-dkjxfe-t500x500.jpg" alt="سعد الغامدي">
+                    سعد الغامدي
+                </button>
+                <button onclick="selectReciter(this, 'ماهر المعيقلي')">
+                    <img src="https://i1.sndcdn.com/artworks-o3FrZPcyRbtiB6k2-Wy1oQw-t500x500.jpg" alt="ماهر المعيقلي">
+                    ماهر المعيقلي
+                </button>
+                <button onclick="selectReciter(this, 'ياسر الدوسري')">
+                    <img src="https://moathemam.org/wp-content/uploads/2023/06/Yasser-bin-Rashid-Al-Dosari-2.jpg" alt="ياسر الدوسري">
+                    ياسر الدوسري
+                </button>
+                <button onclick="selectReciter(this, 'أحمد العجمي')">
+                    <img src="https://ar.assabile.com/media/photo/full_size/ahmed-al-ajmi-979.jpg" alt="أحمد العجمي">
+                    أحمد العجمي
+                </button>
+                <button onclick="selectReciter(this, 'ناصر القطامي')">
+                    <img src="https://www.almowaten.net/wp-content/uploads/%D9%86%D8%A7%D8%B5%D8%B1-%D8%A7%D9%84%D9%82%D8%B7%D8%A7%D9%85%D9%8A-2.jpg" alt="ناصر القطامي">
+                    ناصر القطامي
+                </button>
+                <button onclick="selectReciter(this, 'عمر القزابري')">
+                    <img src="https://static.suratmp3.com/pics/reciters/thumbs/3_600_600.jpg" alt="عمر القزابري">
+                    عمر القزابري
+                </button>
+                <button onclick="selectReciter(this, 'محمد صديق المنشاوي')">
+                    <img src="https://i.pinimg.com/564x/be/0a/bd/be0abd0f3297bf93ad7eda235c625155.jpg" alt="محمد صديق المنشاوي">
+                    محمد صديق المنشاوي
+                </button>
+                <button onclick="selectReciter(this, 'عبد الباسط عبد الصمد')">
+                    <img src="https://aswatonline.com/wp-content/uploads/2018/04/55-1.jpg" alt="عبد الباسط عبد الصمد">
+                    عبد الباسط عبد الصمد
+                </button>
+                <button onclick="selectReciter(this, 'إسلام صبحي')">
+                    <img src="https://media.unitedmuslimworld.com/img/23/12/23/12495.jpg" alt="إسلام صبحي">
+                    إسلام صبحي
+                </button>
+                <button onclick="selectReciter(this, 'فارس عباد')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ2wWuAaaWFQC4KvOW26hfYzY2On25yPEo6A&s" alt="فارس عباد">
+                    فارس عباد
+                </button>
+                <button onclick="selectReciter(this, 'خالد الجليل')">
+                        <img src="https://i1.sndcdn.com/avatars-000116366466-y9phwf-t1080x1080.jpg" alt="خالد الجليل">
+                        خالد الجليل
+                    </button>
+                    <button onclick="selectReciter(this, 'وديع اليمني')">
+                        <img src="https://pbs.twimg.com/profile_images/1454458372422516737/NwQGX91v_400x400.jpg" alt="وديع اليمني">
+                        وديع اليمني
+                    </button>
+                    <button onclick="selectReciter(this, 'هزاع البلوشي')">
+                        <img src="https://i.pinimg.com/564x/bc/1e/e0/bc1ee02df0a6a1751857f1ddc7844757.jpg" alt="هزاع البلوشي">
+                        هزاع البلوشي
+                    </button>
+                    <button onclick="selectReciter(this, 'رعد محمد الكردي')">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR-pHY6lsNyqYryR3arv06b33eXMgVOUv9_TEzKvd5AHJg13Djq621tZzpAY4yAV0AMbSjz390V3C-1g6KWTJA7ZONpAuiH3ArXMbq1kQw" alt="رعد محمد الكردي">
+                        رعد محمد الكردي
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Section pour afficher les anashid -->
+            <div class="section">
+                <a class="icon" onclick="toggleDropdown('songs-dropdown')">أناشيد</a>
+                <div id="songs-dropdown" class="dropdown">
+                    <!-- Liste des anashid -->
+                    <button onclick="selectSong(this, 'أضفيت')">أضفيت</button>
+                    <button onclick="selectSong(this, 'اذا ما قال لي ربي')">اذا ما قال لي ربي</button>
+                    <button onclick="selectSong(this, 'هل لك سر عند اللَّه')">هل لك سر عند اللَّه</button>
+                    <button onclick="selectSong(this, 'سأقبل يا خالقي من جديد')">سأقبل يا خالقي من جديد</button>
+                    <button onclick="selectSong(this, 'ليس الغريب')">ليس الغريب</button>
+                    <button onclick="selectSong(this, 'سبع طوال')">سبع طوال</button>
+                    <button onclick="selectSong(this, 'جمال الوجود')">جمال الوجود</button>
+                    <button onclick="selectSong(this, 'يا منزل القرآن')">يا منزل القرآن</button>
+                    <button onclick="selectSong(this, 'العشرة المبشرون بالجنة')">العشرة المبشرون بالجنة</button>
+                    <button onclick="selectSong(this, 'كشوق اليالي')">كشوق اليالي</button>
+                    <button onclick="selectSong(this, 'ما أعدلك')">ما أعدلك</button>
+                    <button onclick="selectSong(this, 'أنا العبد')">أنا العبد</button>
+
+                </div>
+            </div>
+    
+            <!-- Barre audio toujours visible -->
+            <div class="audio-player-container">
+                <audio id="audio-player" controls>
+                    <source id="audioSource" src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="audio-controls">
+                    <div class="replay-audio">
+                        <i class="fas fa-undo" onclick="replayAudio()"></i>
+                        <span style="color: #f8f4f4;"></span>
+                    </div>
+                    <div class="volume-control">
+                        <i class="fas fa-volume-up"></i>
+                        <span style="color: #f2efef;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-content">
+            <p style="font-family:sans-serif" class="copyright">
+                تم تطويره بواسطة 
+                <span class="developer-name">
+                    ابن دادة خديجة
+                </span>
+                <span class="year">&copy; 2025</span>
+            </p>
+        </div>
+    
+        <!-- Social Media Icons -->
+        <div class="social-icons">
+            <a href="https://www.instagram.com/khadija_bendada_?igsh=MW1tNDF2ZjkxZW8yOA==" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/khadija-bendada-3765a2347?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/KHADIJA447" target="_blank"><i class="fab fa-github"></i></a>
+        </div> 
+  <script src="script.js"></script>
+</body>
+</html>
