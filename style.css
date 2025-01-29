@@ -81,7 +81,6 @@ h1 {
 .container {
     margin: 30px auto; /* Reduced distance between subtitle and icons */
     padding: 20px;
-    background: rgba(203, 199, 191, 0.674);
     border-radius: 15px;
     width: 90%;
     max-width: 600px;
