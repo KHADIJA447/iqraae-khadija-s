@@ -29,7 +29,7 @@
                 "جمال الوجود": "https://cdn1.esm3.com/music/7754/m277835.mp3",
                 "يا منزل القرآن": "https://cdn1.esm3.com/music/7754/m277836.mp3",
                 "العشرة المبشرون بالجنة": "https://cdn1.esm3.com/music/7754/m277837.mp3",
-                "كشوق اليالي": "assets/MluY7b4VzUE.mp3",
+                "كشوق اليالي": "assets/audio/MluY7b4VzUE.mp3",
                 "أنا العبد": "https://cdn1.esm3.com/music/807/Al3fasy_qalby-alsagher-ana-al3abd.mp3",
                 "ما أعدلك": ""
                 
