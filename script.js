@@ -25,13 +25,14 @@
                 "هل لك سر عند اللَّه": "https://cdn1.esm3.com/music/807/m274464.mp3",
                 "سأقبل يا خالقي من جديد": "https://ia601308.us.archive.org/2/items/Anasheed_Dorarr.blogspot.com/saoqbilo-islam-sobhi.mp3",
                 "ليس الغريب": "https://cdn1.esm3.com/music/4881/esm3.com.65450.mp3",
-                "سبع طوال": "https://cdn1.esm3.com/music/7754/m277834.mp3",
-                "جمال الوجود": "https://cdn1.esm3.com/music/7754/m277835.mp3",
-                "يا منزل القرآن": "https://cdn1.esm3.com/music/7754/m277836.mp3",
-                "العشرة المبشرون بالجنة": "https://cdn1.esm3.com/music/7754/m277837.mp3",
+                "سبع طوال": "assets/audio/8e8IpNZVIRQ.mp3",
+                "كنت ميتا":"assets/audio/mEt7OjeVZos.mp3",
+                "جمال الوجود": "assets/audio/JDu8FBWhMQM.mp3",
+                "يا منزل القرآن": "assets/audio/utMa9xkNJU0.mp3",
+                "العشرة المبشرون بالجنة": "assets/audio/VwGcDf_2d_k.mp3",
                 "كشوق اليالي": "assets/audio/MluY7b4VzUE.mp3",
                 "أنا العبد": "https://cdn1.esm3.com/music/807/Al3fasy_qalby-alsagher-ana-al3abd.mp3",
-                "ما أعدلك": ""
+                "ما أعدلك": "assets/audio/lcKVQCRSeiY.mp3",
                 
             };
     
