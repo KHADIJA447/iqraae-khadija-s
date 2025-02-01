@@ -25,7 +25,7 @@
                 "هل لك سر عند اللَّه": "https://cdn1.esm3.com/music/807/m274464.mp3",
                 "سأقبل يا خالقي من جديد": "https://ia601308.us.archive.org/2/items/Anasheed_Dorarr.blogspot.com/saoqbilo-islam-sobhi.mp3",
                 "ليس الغريب": "https://cdn1.esm3.com/music/4881/esm3.com.65450.mp3",
-                "سبع طوال": "assets/8e8IpNZVIRQ.mp3",
+                "سبع طوال": "assets/saboan tiwali.mp3.unknown",
                 "كنت ميتا":"assets/mEt7OjeVZos.mp3",
                 "جمال الوجود": "assets/JDu8FBWhMQM.mp3",
                 "يا منزل القرآن": "assets/utMa9xkNJU0.mp3",
